@@ -12,7 +12,7 @@ _branch=master
 _gitname=$_basename
 pkgname=$_basename-git
 
-pkgver=0.2.3.r22.g8f8f87c
+pkgver=0.2.4.r14.gbcaa7a9
 
 pkgrel=1
 pkgdesc="The Glacier image gallery"
