@@ -4,45 +4,30 @@
 # Contributor: Alexey Andreyev <aa13q@ya.ru>
 # Maintainer: James Kittsmiller (AJSlye) <james@nulogicsystems.com>
 
-_host="github.com"
-_project=nemomobile-ux
-_basename=glacier-gallery
-_branch=master
-
-_gitname=$_basename
-pkgname=$_basename-git
-
-pkgver=0.2.4.r28.gb261473
-
+pkgname=glacier-gallery
+pkgver=0.3.1
 pkgrel=1
 pkgdesc="The Glacier image gallery"
 arch=('x86_64' 'aarch64')
-url="https://$_host/$_project/$_gitname#branch=$_branch"
+url="https://github.com/nemomobile-ux/glacier-gallery"
 license=('BSD-3-Clause')
-depends=('qt5-glacier-app-git' 'nemo-qml-plugin-settings-git' 'nemo-qml-plugin-thumbnailer' 'qt5-resource-git' 'qtdocgallery-git')
-optdepends=()
-makedepends=('git' 'qt5-tools' 'cmake')
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
-source=("${pkgname}::git+${url}")
-sha256sums=('SKIP')
-
-pkgver() {
-  cd "${srcdir}/${pkgname}"
-  ( set -o pipefail
-    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-  ) 2>/dev/null
-}
+depends=('qt5-glacier-app'
+	'nemo-qml-plugin-settings' 
+	'nemo-qml-plugin-thumbnailer' 
+	'libresourceqt' 
+	'qtdocgallery')
+makedepends=('qt5-tools' 'cmake')
+source=("${url}/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=('12af5bebafc2e1cea366f746f6909e91f138a0a28bdca0228bd53ab3b33c0310')
 
 build() {
+    cd $pkgname-$pkgver
     cmake \
-        -B "${pkgname}/build" \
-        -S "${pkgname}" \
         -DCMAKE_INSTALL_PREFIX:PATH='/usr'
-    make -C "${pkgname}/build" all
+    make all
 }
 
 package() {
-    make -C "${srcdir}/${pkgname}/build" DESTDIR="$pkgdir" install
+    cd $pkgname-$pkgver
+    make DESTDIR="$pkgdir" install
 }
