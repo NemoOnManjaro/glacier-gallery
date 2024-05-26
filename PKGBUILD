@@ -6,7 +6,7 @@
 
 pkgname=glacier-gallery
 pkgver=0.4
-pkgrel=1
+pkgrel=2
 pkgdesc="The Glacier image gallery"
 arch=('x86_64' 'aarch64')
 url="https://github.com/nemomobile-ux/glacier-gallery"
@@ -16,7 +16,7 @@ depends=('qt6-glacier-app'
 	'nemo-qml-plugin-thumbnailer'
 	'libresourceqt>=1.32.0'
 	'qtdocgallery')
-makedepends=('qt6-tools' 'cmake')
+makedepends=('qt6-tools' 'clang' 'cmake')
 source=("${url}/archive/refs/tags/$pkgver.tar.gz")
 sha256sums=('fe3403e0684fa7144df30c856b61e55b90aa38845977ae173c094419eeca24a6')
 
